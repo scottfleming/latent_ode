@@ -6,7 +6,7 @@
 import os
 import sys
 import matplotlib
-matplotlib.use('Agg')
+# matplotlib.use('Agg')
 import matplotlib.pyplot
 import matplotlib.pyplot as plt
 
@@ -23,18 +23,45 @@ import torch.nn as nn
 from torch.nn.functional import relu
 import torch.optim as optim
 
-import lib.utils as utils
-from lib.plotting import *
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
+from latent_ode.lib.plotting import *
 
-from lib.rnn_baselines import *
-from lib.ode_rnn import *
-from lib.create_latent_ode_model import create_LatentODE_model
-from lib.parse_datasets import parse_datasets
-from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
-from lib.diffeq_solver import DiffeqSolver
-from mujoco_physics import HopperPhysics
+from latent_ode.lib.rnn_baselines import *
+from latent_ode.lib.ode_rnn import *
+from latent_ode.lib.create_latent_ode_model import create_LatentODE_model
+from latent_ode.lib.parse_datasets import parse_datasets
+from latent_ode.lib.ode_func import ODEFunc, ODEFunc_w_Poisson
+from latent_ode.lib.diffeq_solver import DiffeqSolver
+from latent_ode.mujoco_physics import HopperPhysics
+from latent_ode.heparin import HeparinDataset
 
-from lib.utils import compute_loss_all_batches
+from latent_ode.lib.utils import compute_loss_all_batches
+
+import traceback
+import warnings
+import sys
+
+def warn_with_traceback(message, category, filename, lineno, file=None, line=None):
+    log = file if hasattr(file,'write') else sys.stderr
+    traceback.print_stack(file=log)
+    log.write(warnings.formatwarning(message, category, filename, lineno, line))
+
+warnings.showwarning = warn_with_traceback
+
+# import lib.utils as utils
+# from lib.plotting import *
+
+# from lib.rnn_baselines import *
+# from lib.ode_rnn import *
+# from lib.create_latent_ode_model import create_LatentODE_model
+# from lib.parse_datasets import parse_datasets
+# from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
+# from lib.diffeq_solver import DiffeqSolver
+# from mujoco_physics import HopperPhysics
+
+# from lib.utils import compute_loss_all_batches
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')

@@ -6,8 +6,11 @@
 import os
 import numpy as np
 import torch
-from lib.utils import get_dict_template
-import lib.utils as utils
+
+import latent_ode
+from latent_ode import lib
+from latent_ode.lib.utils import get_dict_template
+import latent_ode.lib.utils as utils
 from torchvision.datasets.utils import download_url
 
 class HopperPhysics(object):

@@ -7,11 +7,13 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.functional import relu
-import lib.utils as utils
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
 from torch.distributions import Categorical, Normal
-import lib.utils as utils
+import latent_ode.lib.utils as utils
 from torch.nn.modules.rnn import LSTM, GRU
-from lib.utils import get_device
+from latent_ode.lib.utils import get_device
 
 
 # GRU description: 

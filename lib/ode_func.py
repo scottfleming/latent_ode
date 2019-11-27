@@ -8,7 +8,9 @@ import torch
 import torch.nn as nn
 from torch.nn.utils.spectral_norm import spectral_norm
 
-import lib.utils as utils
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
 
 #####################################################################################################
 

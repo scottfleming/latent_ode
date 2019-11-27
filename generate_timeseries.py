@@ -8,10 +8,6 @@ from __future__ import absolute_import, division
 from __future__ import print_function
 import os
 import matplotlib
-if os.path.exists("/Users/yulia"):
-	matplotlib.use('TkAgg')
-else:
-	matplotlib.use('Agg')
 
 import numpy as np
 import numpy.random as npr
@@ -20,7 +16,10 @@ import pickle
 import matplotlib.pyplot as plt
 import matplotlib.image
 import torch
-import lib.utils as utils
+
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
 
 # ======================================================================================
 

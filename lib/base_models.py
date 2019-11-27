@@ -8,9 +8,11 @@ import torch
 import torch.nn as nn
 from torch.nn.functional import relu
 
-import lib.utils as utils
-from lib.encoder_decoder import *
-from lib.likelihood_eval import *
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
+from latent_ode.lib.encoder_decoder import *
+from latent_ode.lib.likelihood_eval import *
 
 from torch.distributions.multivariate_normal import MultivariateNormal
 from torch.distributions.normal import Normal

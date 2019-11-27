@@ -14,6 +14,44 @@ import random
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
+
+def get_data_min_max(records):
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    
+    data_min, data_max = None, None
+    inf = torch.Tensor([float("Inf")])[0].to(device)
+    
+    for b, (record, tt, vals, mask, labels) in enumerate(records):
+        n_features = vals.size(-1)
+        
+        batch_min = []
+        batch_max = []
+        for i in range(n_features):
+            non_missing_vals = vals[:, i][mask[:, i] == 1]
+            if len(non_missing_vals) == 0:
+                batch_min.append(inf)
+                batch_max.append(-inf)
+            else:
+                batch_min.append(torch.min(non_missing_vals))
+                batch_max.append(torch.max(non_missing_vals))
+                
+        
+        batch_min = torch.stack(batch_min)
+        batch_max = torch.stack(batch_max)
+
+        if (data_min is None) and (data_max is None):
+            data_min = batch_min
+            data_max = batch_max
+        else:
+            data_min = torch.min(data_min, batch_min)
+            data_max = torch.max(data_max, batch_max)
+            
+    return data_min, data_max
+
+
 def parse_header(line):
     params_in_file = line.split(',')
     params_in_file = [str.replace(s, '"', '').strip() for 
@@ -322,8 +360,12 @@ class HeparinDataset(object):
         plt.close(fig)
     
 
-def variable_time_collate_fn(batch, args, device = torch.device("cpu"), data_type = "train", 
-    data_min = None, data_max = None):
+def variable_time_collate_fn(batch, 
+                             args, 
+                             device=torch.device("cpu"), 
+                             data_type="train", 
+                             data_min=None, 
+                             data_max=None):
     """
     Expects a batch of time series data in the form of (record_id, tt, vals, mask, labels) where
         - record_id is a patient id

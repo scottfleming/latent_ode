@@ -8,10 +8,13 @@ import torch
 import torch.nn as nn
 from torch.nn.functional import relu
 
-import lib.utils as utils
-from lib.utils import get_device
-from lib.encoder_decoder import *
-from lib.likelihood_eval import *
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
+from latent_ode.lib.utils import get_device
+from latent_ode.lib.encoder_decoder import *
+from latent_ode.lib.likelihood_eval import *
+from latent_ode.lib.base_models import Baseline, VAE_Baseline
 
 from torch.distributions.multivariate_normal import MultivariateNormal
 from torch.distributions.normal import Normal
@@ -20,7 +23,6 @@ from torch.nn.modules.rnn import GRUCell, LSTMCell, RNNCellBase
 from torch.distributions.normal import Normal
 from torch.distributions import Independent
 from torch.nn.parameter import Parameter
-from lib.base_models import Baseline, VAE_Baseline
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Exponential decay of the hidden states for RNN

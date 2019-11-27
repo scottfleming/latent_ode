@@ -5,13 +5,16 @@
 
 import os
 
-import lib.utils as utils
 import numpy as np
 import tarfile
 import torch
 from torch.utils.data import DataLoader
 from torchvision.datasets.utils import download_url
-from lib.utils import get_device
+
+import latent_ode
+from latent_ode import lib
+import latent_ode.lib.utils as utils
+from latent_ode.lib.utils import get_device
 
 # Adapted from: https://github.com/rtqichen/time-series-datasets
 
